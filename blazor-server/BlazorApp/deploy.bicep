@@ -36,7 +36,7 @@ param sku string = 'F1'
 param configSku string = 'standard'
 
 resource config 'Microsoft.AppConfiguration/configurationStores@2020-06-01' = {
-  name: 'asc-${name}config'
+  name: 'appcs-${name}config'
   location: location
   sku: {
     name: configSku
@@ -94,7 +94,7 @@ resource kvaadb2cSecret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
 }
 
 resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
-  name: '${name}plan'
+  name: 'plan-${name}-${location}'
   location: location
   sku: {
     name: sku
@@ -106,7 +106,7 @@ resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
 }
 
 resource web 'Microsoft.Web/sites@2020-12-01' = {
-  name: '${name}web'
+  name: 'app-${name}'
   location: location
   identity: {
     type: 'SystemAssigned'
