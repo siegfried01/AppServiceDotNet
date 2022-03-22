@@ -116,10 +116,10 @@ resource web 'Microsoft.Web/sites@2020-12-01' = {
     serverFarmId: plan.id
     siteConfig: {
       linuxFxVersion: 'DOTNETCORE|6'
-      connectionStrings: [
+      appSettings: [
         {
-          name: 'AppConfig'
-          connectionString: listKeys(config.id, config.apiVersion).value[0].connectionString
+          name: 'AzureAppConfiguration:Endpoint'
+          value: listKeys(config.id, config.apiVersion).value[0].connectionString
         }
       ]
     }
