@@ -2,9 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "clientSecret": {
-      "value": "c728d550-325f-4ecb-a0c3-4e1a124d9636"
-    },
     "aadb2cConfig": {
       "value": {
         "Instance": "https://fabrikamb2c.b2clogin.com",

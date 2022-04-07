@@ -1,21 +1,3 @@
-/*
- *
- * Begin commands to execute this file using Azure CLI with PowerShell
- * $name='RyanCHillBlazorAppDeployment'
- * $rg="rg_$name"
- * $loc='westus2'
- * az.cmd group create --location $loc --resource-group $rg 
- * Set-AzDefault -ResourceGroupName $rg 
- * az.cmd deployment group create --name $name --resource-group $rg   --template-file deploy-RyanCHill-blazor.bicep   --parameters '@deploy.parameters.json' ownerId=$env:AZURE_OBJECTID
- * End commands to execute this file using Azure CLI with Powershell
- *
- * Begin commands to execute this file using Azure CLI with PowerShell
- * $name='RyanCHillBlazorAppDeployment'
- * $rg="rg_$name"
- * $loc='westus2'
- * az.cmd group delete --name $rg --yes
- * End commands to execute this file using Azure CLI with Powershell
- */
 @description('The base name for resources')
 param name string = uniqueString(resourceGroup().id)
 
@@ -51,9 +33,8 @@ param sku string = 'F1'
   'free'
   'standard'
 ])
-param configSku string = 'free'
+param configSku string = 'standard'
 
-param ownerId string
 resource config 'Microsoft.AppConfiguration/configurationStores@2020-06-01' = {
   name: 'asc-${name}config'
   location: location
@@ -90,15 +71,6 @@ resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
     }
     tenantId: subscription().tenantId
     accessPolicies: [
-      {
-        tenantId: subscription().tenantId
-        objectId: ownerId
-        permissions:{
-          secrets:[
-            'all'
-          ]
-        }
-      }
       {
         tenantId: subscription().tenantId
         objectId: web.identity.principalId
